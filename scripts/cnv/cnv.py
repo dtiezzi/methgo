@@ -16,11 +16,13 @@ def extract_chrnum(chr):
         try:
             return int(chr[3:])
         except ValueError:
-            return chr[3:]
+            return 23
+            #return chr[3:]
     try:
         return int(chr)
     except ValueError:
-        return chr[3:]
+        return 23
+        #return chr[3:]
 
 def main():
     parser = argparse.ArgumentParser()
@@ -101,7 +103,7 @@ def main():
                     cnv_cand.extend(temp)
                 temp = []
         prev = next
-    data = data.ix[pd.MultiIndex.from_tuples(cnv_cand, names=['chr', 'start', 'end'])]
+    data = data.loc[pd.MultiIndex.from_tuples(cnv_cand, names=['chr', 'start', 'end'])]
     root = os.path.splitext(os.path.basename(args.bamfile))[0]
     data.to_csv('{}.cnv.txt'.format(root), sep='\t')
 
